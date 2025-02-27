@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "453746814738",
+    "project_id": "new-walking-school-bus",
+    "storage_bucket": "new-walking-school-bus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453746814738:android:a03e6955818809f8574dcb",
+        "android_client_info": {
+          "package_name": "com.jjungoori.new_walking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453746814738-c2pf8a42qlsarjav3k6jsadus3rle01c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jjungoori.new_walking",
+            "certificate_hash": "36122dbc82d56908b341f1eb37d1fd04b68fd965"
+          }
+        },
+        {
+          "client_id": "453746814738-k36nt7p8erj38an7i407vm60tp5e2382.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jjungoori.new_walking",
+            "certificate_hash": "3691d607bb333276b849fe50a65978d9ef1174f6"
+          }
+        },
+        {
+          "client_id": "453746814738-o66im9druc6c8gnrcmkc7n8335fdjpui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jjungoori.new_walking",
+            "certificate_hash": "3541c76e33497ce3f6f49ab004574f4ee26784d4"
+          }
+        },
+        {
+          "client_id": "453746814738-bk7n1m16u6rq8h3ap4e156fd84qk2jqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGyyMQK6wyVK2y9Bq26epHZU1xU4kFpFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453746814738-bk7n1m16u6rq8h3ap4e156fd84qk2jqo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "453746814738-818qioqat9dmj31bqg9tnn7vad1eblvu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jjungoori.newWalking"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453746814738:android:67a72e00940f8941574dcb",
+        "android_client_info": {
+          "package_name": "com.jjungoori.walking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453746814738-slu4mqhpjuqsa2kpennng05s1vm34gl1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jjungoori.walking",
+            "certificate_hash": "3541c76e33497ce3f6f49ab004574f4ee26784d4"
+          }
+        },
+        {
+          "client_id": "453746814738-bk7n1m16u6rq8h3ap4e156fd84qk2jqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGyyMQK6wyVK2y9Bq26epHZU1xU4kFpFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453746814738-bk7n1m16u6rq8h3ap4e156fd84qk2jqo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "453746814738-818qioqat9dmj31bqg9tnn7vad1eblvu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jjungoori.newWalking"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

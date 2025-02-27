@@ -1,0 +1,18 @@
+flutter_native_splash:
+#  color: "#F5B400"  # 배경색 설정
+  background_image: "assets/images/splashBackgroundImage.png"  # 배경 이미지 설정
+
+  image: "assets/images/splashIconImage.png"  # 앱 아이콘 이미지 설정
+#  branding: "assets/images/branding.png"  # 브랜드 이미지 설정
+  branding_mode: bottom  # 하단에 브랜드 이미지 표시
+
+  # Android 12 이상에서의 설정
+  android_12:
+    image: "assets/images/splashIconImage.png"  # Android 12 이상에서 사용할 이미지
+    color: "#F5B400"  # Android 12 배경색 설정
+    icon_background_color: "#F5B400"  # 아이콘 배경색 설정
+#    icon_color: "#F5B400"  # 아이콘 색상 설정
+  # 플랫폼별 추가 설정 (예시로 안드로이드만 설정)
+  android: true
+  ios: true
+  web: true
