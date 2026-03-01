@@ -170,12 +170,11 @@ class _BusSelectionPageState extends State<BusSelectionPage> {
                                 );
                               });
                             },
-                            onPressed: (){
-                              BusDataViewModel.to.setTargetBusId(
+                            onPressed: () async {
+                              await BusDataViewModel.to.setTargetBusId(
                                   CurrentUserDataViewModel.to.buses[index]['id']
                               );
                               Get.toNamed("/home");
-                              // Get.toNamed("/home");
                             },
                           );
                           // return MyOpacityRisingWidget(

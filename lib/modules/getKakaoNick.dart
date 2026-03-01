@@ -9,3 +9,13 @@ Future<String?> getKakaoNickname() async {
     return null;
   }
 }
+
+Future<String?> getKakaoId() async {
+  try {
+    User user = await UserApi.instance.me();
+    return user.id?.toString();
+  } catch (e) {
+    print("Failed to get Kakao id: $e");
+    return null;
+  }
+}

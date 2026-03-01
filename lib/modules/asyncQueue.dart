@@ -56,7 +56,7 @@ class AsyncTaskQueue {
 
   /// 해시 키 자동 생성
   int _generateHash() {
-    return Random().nextInt(1 << 32);
+    return Random().nextInt(0x7fffffff);
   }
 }
 
