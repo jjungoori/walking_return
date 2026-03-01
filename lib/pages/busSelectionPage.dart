@@ -29,12 +29,23 @@ class _BusSelectionPageState extends State<BusSelectionPage> {
   // final Set<int> _alreadyDisplayed = {}; // 이미 표시된 항목의 인덱스를 추적
   int previousBusCount = 0;
   var busesCanLoad = false.obs;
+  bool _didInitBusData = false;
 
   @override
   void initState() {
     super.initState();
 
-    initBusData();
+    if (AuthViewModel.to.currentUser.value != null) {
+      _didInitBusData = true;
+      initBusData();
+    }
+    ever(AuthViewModel.to.currentUser, (user) {
+      if (_didInitBusData) return;
+      if (user != null) {
+        _didInitBusData = true;
+        initBusData();
+      }
+    });
 
     // busData 변경 감지 및 스크롤 동작 추가
     ever(CurrentUserDataViewModel.to.buses, (_) {

@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import '../modules/getKakaoNick.dart';
 
@@ -18,8 +20,22 @@ class AuthService {
     return _firebaseAuth.currentUser;
   }
 
+  Stream<User?> authStateChanges() {
+    return _firebaseAuth.authStateChanges();
+  }
+
   Future<kakao.OAuthToken?> _loginWithKakaoRepo() async{
     var token;
+    if (kIsWeb) {
+      try {
+        token = await kakao.UserApi.instance.loginWithKakaoAccount();
+        print('카카오계정으로 로그인 성공');
+        return token;
+      } catch (error) {
+        print('카카오계정으로 로그인 실패 $error');
+      }
+      return null;
+    }
     if (await kakao.isKakaoTalkInstalled()) {
       try {
         token = await kakao.UserApi.instance.loginWithKakaoTalk();
@@ -57,7 +73,8 @@ class AuthService {
     // kakao.OAuthToken token = await kakao.UserApi.instance.loginWithKakaoAccount();
     try{
       kakao.OAuthToken token = (await _loginWithKakaoRepo())!;
-      var provider = OAuthProvider('oidc.kakao');
+      var providerId = kIsWeb ? 'oidc.kakao2' : 'oidc.kakao';
+      var provider = OAuthProvider(providerId);
       var credential = provider.credential(
         idToken: token.idToken,
         accessToken: token.accessToken,
@@ -82,7 +99,11 @@ class AuthService {
 
   Future<void> logout() async {
     await _firebaseAuth.signOut();
-    await kakao.UserApi.instance.logout();
+    try {
+      await kakao.UserApi.instance.logout();
+    } catch (e) {
+      print("카카오 로그아웃 실패(웹일 수 있음): $e");
+    }
   }
 }
 
@@ -94,11 +115,22 @@ class AuthViewModel extends GetxController {
   final RxBool isLoading = false.obs;
   final RxBool isLoggedIn = false.obs;
   final Rx<User?> currentUser = Rx<User?>(null);
+  StreamSubscription<User?>? _authSub;
 
   @override
   void onInit() {
     super.onInit();
+    _authSub = _authService.authStateChanges().listen((user) {
+      currentUser.value = user;
+      isLoggedIn.value = user != null;
+    });
     _checkLoginStatus();
+  }
+
+  @override
+  void onClose() {
+    _authSub?.cancel();
+    super.onClose();
   }
 
   Future<void> _checkLoginStatus() async {
@@ -118,7 +150,7 @@ class AuthViewModel extends GetxController {
     try {
       isLoading.value = true;
       await _authService.loginWithKakao();
-      _checkLoginStatus();
+      await _checkLoginStatus();
       isLoading.value = false;
       success = true;
       print("로그인 성공!!");

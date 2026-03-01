@@ -28,7 +28,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   KakaoSdk.init(
     nativeAppKey: 'a1c9777515879c04248d1ba76bfc85c0',
-    javaScriptAppKey: 'e6ed79e07f29727292874a8bb2508dc4',
+    javaScriptAppKey: '4de65029b745f6837a1e3766011d40c9',
   );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

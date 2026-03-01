@@ -6,6 +6,7 @@ import 'package:walking/Controllers/busDataController.dart';
 import 'package:walking/Controllers/noteController.dart';
 import 'package:walking/widgets/animations.dart';
 import 'package:walking/widgets/buttons.dart';
+import 'package:walking/widgets/alerts.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:walking/widgets/loadingOverlay.dart';
@@ -172,13 +173,75 @@ class _HomePageState extends State<HomePage> {
 
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                      child: Text("버스 메모",
-                        style: TextDatas.homeButton,
-                      ),
+                      child: Obx(() {
+                        final description = BusDataViewModel.to.processedBusData.value.description;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("버스 메모",
+                              style: TextDatas.homeButton,
+                            ),
+                            const SizedBox(height: 8),
+                            if(description.isNotEmpty)
+                              Text(
+                                description,
+                                style: TextDatas.subtitle,
+                                maxLines: 5,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            else
+                              Text(
+                                "메모가 비었습니다.",
+                                style: TextDatas.description,
+                              ),
+                          ],
+                        );
+                      }),
                     ),
 
                     onPressed: (){
-                      // 메모 추가
+                      final controller = TextEditingController(
+                        text: BusDataViewModel.to.processedBusData.value.description,
+                      );
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return MyChildAlertDialog(
+                            title: "버스 메모 수정하기",
+                            child: TextField(
+                              controller: controller,
+                              maxLines: 5,
+                              decoration: InputDecoration(
+                                hintText: "메모 사항을 입력하세요.",
+                                hintStyle: TextDatas.description,
+                                filled: true,
+                                fillColor: ColorDatas.backgroundSoft,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: const EdgeInsets.all(12),
+                              ),
+                            ),
+                            onConfirm: () async {
+                              final text = controller.text.trim();
+                              await BusDataViewModel.to.updateBusDescription(text);
+                              if (context.mounted) {
+                                Navigator.pop(context);
+                              }
+                            },
+                            onCancel: () => Navigator.pop(context),
+                          );
+                        },
+                      );
                     },
                     color: ColorDatas.background,
                     shadows: [

@@ -197,6 +197,25 @@ class BusDataService extends GetxService {
       print("Error removing student: $e");
     }
   }
+
+  Future<void> updateBusDescription(String description) async {
+    if (targetBusId.value.isEmpty) {
+      print("targetBusId is not set");
+      return;
+    }
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('buses')
+          .doc(targetBusId.value)
+          .update({
+        'description': description,
+      });
+      print("Bus description updated successfully");
+    } catch (e) {
+      print("Error updating bus description: $e");
+    }
+  }
 }
 
 class ProcessedBusData {
@@ -315,6 +334,17 @@ class BusDataViewModel extends GetxController {
       }
       finally{
         return;
+      }
+    });
+  }
+
+  Future<void> updateBusDescription(String description) async {
+    await _asyncTaskQueue.executeTask(() async{
+      try {
+        await _busDataService.updateBusDescription(description);
+        await fetchBusData();
+      } catch (e) {
+        print("Error updating bus description via ViewModel: $e");
       }
     });
   }
