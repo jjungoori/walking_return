@@ -15,8 +15,8 @@ import '../datas.dart';
 List<String> getFromList(List<dynamic> students) {
   List<String> fromList = [];
   for (StudentData student in students) {
-    if (!fromList.contains(student.description)) {
-      fromList.add(student.description);
+    if (!fromList.contains(student.description.trim())) {
+      fromList.add(student.description.trim());
     }
   }
   fromList.sort((a, b) {
@@ -145,7 +145,7 @@ class _NotePageState extends State<NotePage> {
               return StudentSection(
                 // editMode: NoteViewModel.to.editMode.value,
                 from: fromList[modifiedIndex],
-                students: students.where((element) => element.description == fromList[modifiedIndex]).toList(),
+                students: students.where((element) => element.description.trim() == fromList[modifiedIndex]).toList(),
               );
             },
           );

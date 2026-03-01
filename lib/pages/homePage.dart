@@ -96,13 +96,13 @@ class _HomePageState extends State<HomePage> {
 
                             child: Padding(
                               padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                              child: Text("학생 목록",
+                              child: Text("모든 기능 보기",
                                 style: TextDatas.homeButton,
                               ),
                             ),
 
                             onPressed: (){
-                              Get.toNamed('/studentList');
+                              Get.toNamed('/allFunctions');
                             },
                             color: ColorDatas.background,
                             shadows: [
@@ -172,13 +172,13 @@ class _HomePageState extends State<HomePage> {
 
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                      child: Text("추가 기능 보기",
+                      child: Text("버스 메모",
                         style: TextDatas.homeButton,
                       ),
                     ),
 
                     onPressed: (){
-                      Get.toNamed('/allFunctions');
+                      // 메모 추가
                     },
                     color: ColorDatas.background,
                     shadows: [
@@ -276,10 +276,14 @@ class BusStatusWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
-                "담당자: ${BusDataViewModel.to.processedBusData.value!.leaderName}",
-                style: TextDatas.description.copyWith(
-                  color: ColorDatas.onBackgroundSoft,
+              SizedBox(
+                width: 140,
+                child: Text(
+                  "담당자: ${BusDataViewModel.to.processedBusData.value!.leaderName}",
+                  style: TextDatas.description.copyWith(
+                    color: ColorDatas.onBackgroundSoft,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               )
             ],

@@ -168,6 +168,39 @@ class addStudentPage extends StatefulWidget {
 class _addStudentPageState extends State<addStudentPage> {
 
   StudentTextController studentTextController = Get.put(StudentTextController());
+  final FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _fromFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _nameFocusNode.dispose();
+    _fromFocusNode.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleAddStudent(BuildContext context) async {
+    var suc = await BusDataViewModel.to.addStudent(
+        StudentData(
+            name: studentTextController.nameController.value.text,
+            busId: BusDataViewModel.to.targetBusId,
+            description: studentTextController.fromController.value.text=="" ? "0-0" : studentTextController.fromController.value.text,
+            isArrived: false,
+            isAbsent: false,
+            temporary: widget.forTemp
+        )
+    );
+    if(!suc){
+      Get.snackbar("학생 추가 실패", "학생 이름은 비워둘 수 없습니다.", colorText: Colors.red);
+      FocusScope.of(context).requestFocus(_nameFocusNode);
+      return;
+    }
+    studentTextController.clear();
+    FocusScope.of(context).requestFocus(_nameFocusNode);
+    Get.find<BottomBoxPageController>().pageNumber.value = 0;
+    Get.find<BottomBoxAnimationController>().toggle();
+    if(widget.forTemp)
+      Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,9 +239,15 @@ class _addStudentPageState extends State<addStudentPage> {
             ),
             cursorColor: Colors.grey, // 커서 색상
             controller: studentNameController,
+            focusNode: _nameFocusNode,
+            autofocus: true,
+            textInputAction: TextInputAction.next,
             inputFormatters: [
               LengthLimitingTextInputFormatter(20),
             ],
+            onSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_fromFocusNode);
+            },
             onChanged: (text) {
               // Force the widget to rebuild to show the character count
               (context as Element).markNeedsBuild();
@@ -233,9 +272,14 @@ class _addStudentPageState extends State<addStudentPage> {
             ),
             cursorColor: Colors.grey, // 커서 색상
             controller: studentFromController,
+            focusNode: _fromFocusNode,
+            textInputAction: TextInputAction.done,
             inputFormatters: [
               LengthLimitingTextInputFormatter(20),
             ],
+            onSubmitted: (_) async {
+              await _handleAddStudent(context);
+            },
             onChanged: (text) {
               // Force the widget to rebuild to show the character count
               (context as Element).markNeedsBuild();
@@ -303,26 +347,7 @@ class _addStudentPageState extends State<addStudentPage> {
             color: ColorDatas.secondary,
             textColor: ColorDatas.onPrimaryTitle,
             onPressed: ()async{
-              var suc = await BusDataViewModel.to.addStudent(
-                  StudentData(
-                      name: studentTextController.nameController.value.text,
-                      busId: BusDataViewModel.to.targetBusId,
-                      description: studentTextController.fromController.value.text=="" ? "0-0" : studentTextController.fromController.value.text,
-                      isArrived: false,
-                      isAbsent: false,
-                      temporary: widget.forTemp
-                  )
-              );
-              if(!suc){
-                Get.snackbar("학생 추가 실패", "학생 이름은 비워둘 수 없습니다.", colorText: Colors.red);
-                return;
-              }
-              // Get.snackbar("학생이 추가되었습니다.", "", colorText: Colors.green);
-              studentTextController.clear();
-              Get.find<BottomBoxPageController>().pageNumber.value = 0;
-              Get.find<BottomBoxAnimationController>().toggle();
-              if(widget.forTemp)
-                Navigator.pop(context);
+              await _handleAddStudent(context);
             },
           ), startTime: 150)
           // SizedBox(height: 24),

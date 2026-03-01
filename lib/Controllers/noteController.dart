@@ -61,6 +61,7 @@ class NoteViewModel extends GetxController {
     isLoading.value = true; // 데이터 로드 시작
 
     _noteService.listenToStudents(busId).listen((studentList) {
+      studentList.sort((a, b) => a.name.compareTo(b.name));
       students.assignAll(studentList);
       isLoading.value = false; // 데이터 로드 완료
       print("Students updated: ${students.length} students loaded.");

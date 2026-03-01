@@ -39,7 +39,7 @@ class StudentData {
       ID: id,
       name: data['name'] ?? '',
       busId: data['busId'] ?? '',
-      description: data['description'] ?? 'No description',
+      description: (data['description'] ?? 'No description'),
       isArrived: data['isArrived'] ?? false,
       isAbsent: data['isAbsent'] ?? false,
       temporary: data['temporary'] ?? false,
@@ -100,16 +100,20 @@ class BusDataService extends GetxService {
           .get();
 
       await fetchStudentsForBus(targetBusId.value).then((students) {
-        sortedStudents.value = students.map((student) => StudentData(
-            ID: student['id'],
-            name: student['name'],
-            busId: student['busId'],
-            description: student['description'] ?? "NODES",
-            isArrived: student['isArrived'] ?? false,
-            isAbsent: student['isAbsent'] ?? false,
-            temporary: student['temporary'] ?? false,
-          ),
-        ).toList();
+        sortedStudents.value = students
+            .map((student) => StudentData(
+          ID: student['id'],
+          name: student['name'],
+          busId: student['busId'],
+          description: (student['description'] ?? "NODES").trim(), // description에서 뒤에 붙은 띄어쓰기 제거
+          isArrived: student['isArrived'] ?? false,
+          isAbsent: student['isAbsent'] ?? false,
+          temporary: student['temporary'] ?? false,
+        ))
+            .toList();
+
+        // name을 가나다 순으로 정렬
+        sortedStudents.sort((a, b) => a.name.compareTo(b.name));
       });
 
       if (docSnapshot.exists) {

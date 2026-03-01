@@ -16,6 +16,8 @@ class ShareController extends GetxController{
   bool isAttendance = true;
 
   void showStudentListShareDialog(BuildContext context){
+    isAttendance = true;
+
     showDialog(
       context: context,
       builder: (context){

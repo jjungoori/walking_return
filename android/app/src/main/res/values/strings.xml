@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">워킹 스쿨버스</string>
+    <string name="kakao_app_key">a1c9777515879c04248d1ba76bfc85c0</string>
+    <string name="kakao_scheme">kakaoa1c9777515879c04248d1ba76bfc85c0</string>
+</resources>
