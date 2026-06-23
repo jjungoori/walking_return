@@ -2,7 +2,8 @@
     <application
         android:label="워킹 스쿨버스"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:pageSizeCompat="enabled">
         <activity
             android:name=".MainActivity"
             android:exported="true"

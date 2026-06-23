@@ -59,6 +59,12 @@ class _AllFunctionsPageState extends State<AllFunctionsPage> {
                       Get.toNamed('/leaderList');
                     },
                 ),
+                MyLineButton(
+                  text: "학생 목록 보기",
+                  onPressed: (){
+                    Get.toNamed('/studentList');
+                  },
+                ),
               ]
             ),
           ]
